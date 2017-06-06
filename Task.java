@@ -1,6 +1,4 @@
 public class Task {
-	// TODO implement details about project integration here.
-
 	public Task() {
 
 	}
@@ -17,5 +15,14 @@ public class Task {
 		name = newTaskName;	
 	}
 
+	public Context getContext() {
+		return context;
+	}
+
+	public void setContext(Context newContext) {
+		context = newContext;	
+	}
+
 	private String name;
+	private Context context;
 }
