@@ -20,6 +20,7 @@ public class Project {
 
 	public void addTask(Task newTask) {
 		tasks.add(newTask);
+		newTask.setProject(this);
 	}
 
 	public ArrayList<Task> tasks;
