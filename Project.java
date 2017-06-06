@@ -6,6 +6,12 @@ public class Project {
 
 	}
 
+	public Project(String newName) {
+		this();
+		
+		setName(newName);
+	}
+
 	public String getName() {
 		return name;
 	}
