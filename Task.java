@@ -15,10 +15,6 @@ public class Task {
 		name = newTaskName;	
 	}
 
-	/*
-	 * Registers this task to the project given
-	 * Should only be called by the project when this task is being assigned to it
-	 */
 	public void setProject(Project newProject) {
 		project = newProject;
 	}
