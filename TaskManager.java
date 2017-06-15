@@ -1,10 +1,11 @@
+import java.io.Serializable;
 import java.util.*;
 
 /*
  * This class manages all the tasks in the app, be they single actions,
  * assigned to projects, or in a someday/maybe list.
  * */
-public class TaskManager {
+public class TaskManager implements Serializable {
 	public TaskManager() {
 		contexts = new ArrayList<>();
 		projects = new ArrayList<>();

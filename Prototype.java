@@ -1,9 +1,20 @@
+import java.io.*;
 import java.util.*;
 
 public class Prototype {
-    private static TaskManager taskManager = new TaskManager();
+    private static final String fileName = "tasks";
+    private static TaskManager taskManager;
 
     public static void main(String[] args) {
+        try {
+            ObjectInputStream taskManagerReader = new ObjectInputStream(new FileInputStream(fileName));
+
+            taskManager = (TaskManager) taskManagerReader.readObject();
+            taskManagerReader.close();
+        } catch (Exception e) {
+            taskManager = new TaskManager();
+        }
+        
         Scanner scanner = new Scanner(System.in);
 
         String command;
@@ -38,6 +49,15 @@ public class Prototype {
             } else {
                 break;
             }
+        }
+
+        try {
+            ObjectOutputStream taskManagerWriter = new ObjectOutputStream(new FileOutputStream(fileName));
+
+            taskManagerWriter.writeObject(taskManager);
+            taskManagerWriter.flush();
+        } catch (IOException ioException) {
+            System.out.println ("Couldn't write current tasks to file");
         }
 
         System.out.println("Exiting...");

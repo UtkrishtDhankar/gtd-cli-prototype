@@ -1,4 +1,6 @@
-public class Task implements IDoable {
+import java.io.Serializable;
+
+public class Task implements IDoable, Serializable {
 	public Task() {
 		done = false;
 		name = "";

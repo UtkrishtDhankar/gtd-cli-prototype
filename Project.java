@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.util.*;
 
-public class Project implements IDoable {
+public class Project implements IDoable, Serializable {
 	public Project() {
 		done = false;
 		name = "";

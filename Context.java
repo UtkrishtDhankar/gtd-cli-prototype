@@ -1,7 +1,9 @@
+import java.io.Serializable;
+
 /*
  * Represents a context in the GTD sense.
  * */
-public class Context {
+public class Context implements Serializable {
 	public Context() {
 
 	}
