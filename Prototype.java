@@ -4,6 +4,56 @@ import java.util.*;
 public class Prototype {
     private static final String fileName = "tasks";
     private static TaskManager taskManager;
+    private static Scanner scanner;
+
+    private static void displayAllTasks() {
+        for (Task task : taskManager.getAllTasks()) {
+            if (task.getProject() != null) {
+                System.out.print(task.getProject().getName() + " - ");
+            }
+
+            System.out.print(task.getName());
+
+            if (task.getContext() != null) {
+                System.out.print(" @" + task.getContext().getName());
+            }
+
+            System.out.print('\n');
+        }
+    }
+
+    private static Context getContext() {
+        System.out.print("Enter the name of the context: ");
+        String name = scanner.nextLine();
+        return new Context(name);
+    }
+
+    private static Project getProject() {
+        System.out.print("Enter the name of the project: ");
+        String name = scanner.nextLine();
+        return new Project(name);
+    }
+
+    private static Task getTask() {
+        System.out.print("Enter the name of the task: ");
+        String name = scanner.nextLine();
+        Task newTask = new Task(name);
+        
+        System.out.print("Enter the project associated with this task: ");
+        int projectNo = scanner.nextInt();
+        if (projectNo >= 0 && projectNo < taskManager.getAllProjects().size()) {
+            System.out.println("Adding the project" + taskManager.getAllProjects().get(projectNo));
+            newTask.setProject(taskManager.getAllProjects().get(projectNo));
+        }
+
+        System.out.print("Enter the context associated with this task: ");
+        int contextNo = scanner.nextInt();
+        if (contextNo >= 0 && contextNo < taskManager.getAllContexts().size()) {
+            newTask.setContext(taskManager.getAllContexts().get(contextNo));
+        }
+
+        return newTask;
+    }
 
     public static void main(String[] args) {
         try {
@@ -13,39 +63,22 @@ public class Prototype {
             taskManagerReader.close();
         } catch (Exception e) {
             taskManager = new TaskManager();
-        }
-        
-        Scanner scanner = new Scanner(System.in);
+        }         
+
+        scanner = new Scanner(System.in);
 
         String command;
-        while (scanner.hasNext()) {
-            command = scanner.next();
+        while (true) {
+            System.out.print("Enter the next command: ");
+            command = scanner.nextLine();
             if (command.equals("context")) {
-                String contextName = scanner.nextLine();
-                taskManager.addContext(new Context(contextName));
+                taskManager.addContext(getContext());
             } else if (command.equals("project")) {
-                taskManager.addProject(new Project(scanner.nextLine()));
+                taskManager.addProject(getProject());
             } else if (command.equals("task")) {
-                Task newTask = new Task();
-                
-                int projectNo = scanner.nextInt();
-                int contextNo = scanner.nextInt();
-                newTask.setContext(taskManager.getAllContexts().get(contextNo));
-                newTask.setProject(taskManager.getAllProjects().get(projectNo));
-
-                newTask.setName(scanner.nextLine());
-
-                taskManager.addTask(newTask);
+                taskManager.addTask(getTask());
             } else if (command.equals("display")) {
-                int projectNo = scanner.nextInt();
-
-                Project projectToDisplay = taskManager.getAllProjects().get(projectNo);
-                System.out.println(projectToDisplay.getName() + ": ");
-                for (Task task : taskManager.getTasksByProject(projectToDisplay)) {
-                    if (task.getProject() == projectToDisplay) {
-                        System.out.println(task.getName() + " @" + task.getContext().getName());
-                    }
-                }
+                displayAllTasks();
             } else {
                 break;
             }
@@ -56,9 +89,11 @@ public class Prototype {
 
             taskManagerWriter.writeObject(taskManager);
             taskManagerWriter.flush();
+
+            taskManagerWriter.close();
         } catch (IOException ioException) {
             System.out.println ("Couldn't write current tasks to file");
-        }
+        } 
 
         System.out.println("Exiting...");
     }
