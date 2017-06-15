@@ -42,6 +42,14 @@ public class TaskManager implements Serializable {
 		tasks.remove(task);
 	}
 
+	public void addInboxTask(String taskName) {
+		inbox.add(new Task(taskName));
+	}
+
+	public void removeInboxTask(Task inboxTask) {
+		inbox.remove(inboxTask);
+	}
+
 	public void addContext(Context context) {
 		contexts.add(context);
 	}
@@ -106,7 +114,12 @@ public class TaskManager implements Serializable {
 		return projects;
 	}
 
+	public ArrayList<Task> getAllInboxTasks() {
+		return inbox;
+	}
+
 	private ArrayList<Context> contexts;
 	private ArrayList<Project> projects;
 	private ArrayList<Task> tasks;
+	private ArrayList<Task> inbox;
 }
