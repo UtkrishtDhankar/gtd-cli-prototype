@@ -34,11 +34,33 @@ public class Prototype {
         return new Project(name);
     }
 
+    private static void displayProjects() {
+        System.out.println("The projects are:");
+
+        ArrayList<Project> projects = taskManager.getAllProjects();
+        for (int i = 0; i < projects.size(); i++) {
+            System.out.print(i);
+            System.out.println(": " + projects.get(i).getName());
+        }
+    }
+
+    private static void displayContexts() {
+        System.out.println("The contexts are:");
+
+        ArrayList<Context> contexts = taskManager.getAllContexts();
+        for (int i = 0; i < contexts.size(); i++) {
+            System.out.print(i);
+            System.out.println(": " + contexts.get(i).getName());
+        }
+    }
+
     private static Task getTask() {
         System.out.print("Enter the name of the task: ");
         String name = scanner.nextLine();
         Task newTask = new Task(name);
         
+        System.out.println();
+        displayProjects();
         System.out.print("Enter the project associated with this task: ");
         int projectNo = scanner.nextInt();
         if (projectNo >= 0 && projectNo < taskManager.getAllProjects().size()) {
@@ -46,6 +68,8 @@ public class Prototype {
             newTask.setProject(taskManager.getAllProjects().get(projectNo));
         }
 
+        System.out.println();
+        displayContexts();
         System.out.print("Enter the context associated with this task: ");
         int contextNo = scanner.nextInt();
         if (contextNo >= 0 && contextNo < taskManager.getAllContexts().size()) {
@@ -70,7 +94,7 @@ public class Prototype {
         String command;
         while (true) {
             System.out.print("Enter the next command: ");
-            command = scanner.nextLine();
+            command = scanner.next();
             if (command.equals("context")) {
                 taskManager.addContext(getContext());
             } else if (command.equals("project")) {
@@ -82,6 +106,8 @@ public class Prototype {
             } else {
                 break;
             }
+            
+            System.out.println();
         }
 
         try {
