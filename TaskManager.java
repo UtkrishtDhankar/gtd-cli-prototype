@@ -50,6 +50,21 @@ public class TaskManager implements Serializable {
 		inbox.remove(inboxTask);
 	}
 
+	public boolean hasUnprocessedItems() {
+		return !inbox.isEmpty();
+	}
+
+	public Task popFirstUnprocessedTask() {
+        if (!hasUnprocessedItems()) {
+			return null;
+		}
+
+		Task taskToReturn = inbox.get(0);
+		inbox.remove(0);
+
+		return taskToReturn;
+	}
+
 	public void addContext(Context context) {
 		contexts.add(context);
 	}
