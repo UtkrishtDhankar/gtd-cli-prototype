@@ -1,18 +1,33 @@
-public class Task {
+public class Task implements IDoable {
 	public Task() {
-
+		done = false;
+		name = "";
 	}
 
 	public Task(String newName) {
+        this();
+
 		name = newName;	
 	}
 
+    @Override
 	public String getName() {
 		return name;
 	}
 
+    @Override
 	public void setName(String newTaskName) {
 		name = newTaskName;	
+	}
+
+    @Override
+    public boolean isDone() {
+		return done;
+	}
+
+    @Override
+    public void setDone(boolean newDone) {
+		done = newDone;
 	}
 
 	public void setProject(Project newProject) {
@@ -31,7 +46,10 @@ public class Task {
 		context = newContext;	
 	}
 
+    // IDoable data
 	private String name;
+	private boolean done;
+
 	private Context context;
 	private Project project;
 }

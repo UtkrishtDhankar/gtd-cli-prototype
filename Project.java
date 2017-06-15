@@ -1,8 +1,9 @@
 import java.util.*;
 
-public class Project {
+public class Project implements IDoable {
 	public Project() {
-
+		done = false;
+		name = "";
 	}
 
 	public Project(String newName) {
@@ -19,5 +20,16 @@ public class Project {
 		name = newName;
 	}
 
+    @Override
+    public boolean isDone() {
+		return done;
+	}
+
+    @Override
+    public void setDone(boolean newDone) {
+		done = newDone;
+	}
+
+	private boolean done;
 	private String name;
 }
