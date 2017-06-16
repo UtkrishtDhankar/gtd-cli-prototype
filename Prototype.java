@@ -94,6 +94,9 @@ public class Prototype {
         } else {
             System.out.print("Alright, trashing the task.");
         }
+
+        // flush the scanner
+        scanner.nextLine();
     }
 
     public static void main(String[] args) {
@@ -120,6 +123,8 @@ public class Prototype {
                 taskManager.addInboxTask(getInboxItem());
             } else if (command.equals("display")) {
                 displayAllTasks();
+            } else if (command.equals("process")) {
+                processTopInboxItem();
             } else {
                 break;
             }
