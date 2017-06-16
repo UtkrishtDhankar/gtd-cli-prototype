@@ -7,10 +7,22 @@ import java.util.*;
  * */
 public class TaskManager implements Serializable {
 	public TaskManager() {
-		contexts = new ArrayList<>();
-		projects = new ArrayList<>();
-		tasks = new ArrayList<>();
-		inbox = new ArrayList<>();
+		initialize();
+	}
+
+	// initializes this object, creating new lists for everything that is null
+	public void initialize() {
+		if (contexts == null)
+			contexts = new ArrayList<>();
+		
+		if (projects == null)
+			projects = new ArrayList<>();
+
+		if (tasks == null)
+			tasks = new ArrayList<>();
+
+		if (inbox == null)
+			inbox = new ArrayList<>();
 	}
 
 	public void addProject(Project project) {

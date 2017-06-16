@@ -109,6 +109,8 @@ public class Prototype {
             taskManager = new TaskManager();
         }         
 
+        taskManager.initialize();
+
         scanner = new Scanner(System.in);
 
         String command;
