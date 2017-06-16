@@ -54,29 +54,46 @@ public class Prototype {
         }
     }
 
-    private static Task getTask() {
-        System.out.print("Enter the name of the task: ");
-        String name = scanner.nextLine();
-        Task newTask = new Task(name);
-        
-        System.out.println();
-        displayProjects();
-        System.out.print("Enter the project associated with this task: ");
-        int projectNo = scanner.nextInt();
-        if (projectNo >= 0 && projectNo < taskManager.getAllProjects().size()) {
-            System.out.println("Adding the project" + taskManager.getAllProjects().get(projectNo));
-            newTask.setProject(taskManager.getAllProjects().get(projectNo));
-        }
+    private static String getInboxItem() {
+        System.out.print("Enter the inbox item: ");
+        String item = scanner.nextLine();
+        System.out.println("Entered item was: " + item);
+        return item;
+    }
 
-        System.out.println();
-        displayContexts();
-        System.out.print("Enter the context associated with this task: ");
-        int contextNo = scanner.nextInt();
-        if (contextNo >= 0 && contextNo < taskManager.getAllContexts().size()) {
-            newTask.setContext(taskManager.getAllContexts().get(contextNo));
-        }
+    private static void processTopInboxItem() {
+        Task poppedTask = taskManager.popFirstUnprocessedTask();
+        System.out.print("Got the following item: " + poppedTask.getName());
 
-        return newTask;
+        System.out.print("Is this actionable? (y/n): ");
+        String ans = scanner.next();
+
+        if (ans.equals("y") || ans.equals("Y")) {
+            System.out.print("Allright, enter the detailed name of the task: ");
+            String name = scanner.nextLine();
+            Task newTask = new Task(name);
+            
+            System.out.println();
+            displayProjects();
+            System.out.print("Enter the project associated with this task: ");
+            int projectNo = scanner.nextInt();
+            if (projectNo >= 0 && projectNo < taskManager.getAllProjects().size()) {
+                System.out.println("Adding the project" + taskManager.getAllProjects().get(projectNo));
+                newTask.setProject(taskManager.getAllProjects().get(projectNo));
+            }
+
+            System.out.println();
+            displayContexts();
+            System.out.print("Enter the context associated with this task: ");
+            int contextNo = scanner.nextInt();
+            if (contextNo >= 0 && contextNo < taskManager.getAllContexts().size()) {
+                newTask.setContext(taskManager.getAllContexts().get(contextNo));
+            }
+
+            taskManager.addTask(newTask);
+        } else {
+            System.out.print("Alright, trashing the task.");
+        }
     }
 
     public static void main(String[] args) {
@@ -94,19 +111,18 @@ public class Prototype {
         String command;
         while (true) {
             System.out.print("Enter the next command: ");
-            command = scanner.next();
+            command = scanner.nextLine();
             if (command.equals("context")) {
                 taskManager.addContext(getContext());
             } else if (command.equals("project")) {
                 taskManager.addProject(getProject());
             } else if (command.equals("task")) {
-                taskManager.addTask(getTask());
+                taskManager.addInboxTask(getInboxItem());
             } else if (command.equals("display")) {
                 displayAllTasks();
             } else {
                 break;
             }
-            
             System.out.println();
         }
 

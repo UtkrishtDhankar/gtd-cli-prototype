@@ -10,6 +10,7 @@ public class TaskManager implements Serializable {
 		contexts = new ArrayList<>();
 		projects = new ArrayList<>();
 		tasks = new ArrayList<>();
+		inbox = new ArrayList<>();
 	}
 
 	public void addProject(Project project) {
